@@ -21,6 +21,8 @@ body{
   font-family:Arial;
   box-shadow:0 0 10px #000;
   cursor:move;
+  user-select: none;
+  -webkit-user-select: none;
 }
 h3{
   margin:0;
@@ -34,12 +36,16 @@ h3{
   border:none;
   border-radius:6px;
   font-size:14px;
+  cursor:pointer;
+}
+.btn:hover{
+  opacity:0.8;
 }
 .banker{background:#2ecc71;}
 .player{background:#3498db;}
 .reset{background:#555;color:white;}
 #info{margin-top:8px;font-size:14px;text-align:center;}
-#alert{margin-top:6px;font-weight:bold;}
+#alertBox{margin-top:6px;font-weight:bold;}
 </style>
 </head>
 
@@ -53,7 +59,7 @@ h3{
   <button class="btn reset" onclick="reset()">Reset</button>
 
   <div id="info"></div>
-  <div id="alert"></div>
+  <div id="alertBox"></div>
 </div>
 
 <script>
@@ -81,9 +87,12 @@ function calcStreak(){
 }
 
 function update(){
+  const info = document.getElementById("info");
+  const alertBox = document.getElementById("alertBox");
+  
   if(history.length==0){
     info.innerHTML="Chưa có dữ liệu";
-    alert.innerHTML="";
+    alertBox.innerHTML="";
     return;
   }
 
@@ -104,20 +113,20 @@ function update(){
   `;
 
   if(pb>=60 && last=="B" && streak>=3){
-    alert.style.color="lime";
-    alert.innerText="Cầu mạnh BANKER";
+    alertBox.style.color="lime";
+    alertBox.innerText="Cầu mạnh BANKER";
   }
   else if(pp>=60 && last=="P" && streak>=3){
-    alert.style.color="lime";
-    alert.innerText="Cầu mạnh PLAYER";
+    alertBox.style.color="lime";
+    alertBox.innerText="Cầu mạnh PLAYER";
   }
   else if(pb>=55 || pp>=55){
-    alert.style.color="yellow";
-    alert.innerText="Cầu nghiêng";
+    alertBox.style.color="yellow";
+    alertBox.innerText="Cầu nghiêng";
   }
   else{
-    alert.style.color="red";
-    alert.innerText="Cầu nhiễu";
+    alertBox.style.color="red";
+    alertBox.innerText="Cầu nhiễu";
   }
 }
 
@@ -126,6 +135,7 @@ let menu = document.getElementById("menu");
 let isDown=false,offsetX,offsetY;
 
 menu.addEventListener("mousedown",e=>{
+  e.preventDefault();
   isDown=true;
   offsetX=e.clientX-menu.offsetLeft;
   offsetY=e.clientY-menu.offsetTop;
