@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>TAI XIU AI VIP</title>
+
+<style>
+
+body{
+background:#020617;
+font-family:Arial;
+color:white;
+text-align:center;
+}
+
+h1{
+color:#00f5ff;
+text-shadow:0 0 10px #00f5ff;
+}
+
+.board{
+display:grid;
+grid-template-columns:repeat(10,30px);
+gap:6px;
+justify-content:center;
+margin-top:20px;
+}
+
+.cell{
+width:30px;
+height:30px;
+border-radius:6px;
+}
+
+.tai{
+background:#16a34a;
+}
+
+.xiu{
+background:#dc2626;
+}
+
+button{
+margin:10px;
+padding:10px 25px;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+.result{
+font-size:28px;
+margin-top:20px;
+color:#ffd700;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🎲 TOOL TÀI XỈU AI VIP</h1>
+
+<div>
+
+<button onclick="add('T')">TÀI</button>
+<button onclick="add('X')">XỈU</button>
+
+</div>
+
+<div class="result" id="predict">
+AI: ...
+</div>
+
+<div class="board" id="board"></div>
+
+<script>
+
+let data=[];
+
+function add(v){
+
+data.push(v)
+
+if(data.length>50){
+data.shift()
+}
+
+render()
+
+predict()
+
+}
+
+function render(){
+
+let board=document.getElementById("board")
+board.innerHTML=""
+
+data.forEach(d=>{
+
+let c=document.createElement("div")
+c.classList.add("cell")
+
+if(d=="T") c.classList.add("tai")
+if(d=="X") c.classList.add("xiu")
+
+board.appendChild(c)
+
+})
+
+}
+
+function predict(){
+
+let last=data.slice(-4)
+
+let result=""
+
+if(last.join("")=="TTTT"){
+result="XỈU (gãy cầu)"
+}
+else if(last.join("")=="XXXX"){
+result="TÀI (gãy cầu)"
+}
+else if(last.join("")=="TXT" || last.join("")=="XTX"){
+result="ĐANG CẦU 1-1"
+}
+else{
+
+let t=data.filter(x=>x=="T").length
+let x=data.filter(x=>x=="X").length
+
+result=t>x?"XỈU":"TÀI"
+
+}
+
+document.getElementById("predict").innerText="AI GỢI Ý: "+result
+
+}
+
+</script>
+
+</body>
+</html>
