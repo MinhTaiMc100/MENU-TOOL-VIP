@@ -2,66 +2,38 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Tool Tài Xỉu VIP</title>
+<title>Tool Tài Xỉu Online</title>
 
 <style>
-
 body{
-margin:0;
-font-family:Arial;
 background:#0f172a;
 color:white;
+font-family:Arial;
 text-align:center;
 }
 
-/* MENU NỔI */
-
-.menu{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-background:#111827;
-padding:15px;
-box-shadow:0 0 10px cyan;
-z-index:1000;
-}
-
-.menu button{
-margin:5px;
-padding:10px 15px;
-border:none;
-border-radius:6px;
-background:cyan;
-cursor:pointer;
-font-weight:bold;
-}
-
-/* BOX TOOL */
-
 .box{
+margin:auto;
 margin-top:120px;
-background:#1f2937;
 width:420px;
-margin-left:auto;
-margin-right:auto;
+background:#1f2937;
 padding:30px;
 border-radius:12px;
 box-shadow:0 0 15px cyan;
 }
 
-input{
-width:90%;
-padding:12px;
-border-radius:8px;
+button{
+padding:12px 25px;
 border:none;
-margin-top:15px;
+border-radius:8px;
+background:cyan;
+font-size:18px;
+cursor:pointer;
 }
 
 #result{
-margin-top:20px;
-font-size:28px;
-font-weight:bold;
+margin-top:25px;
+font-size:26px;
 }
 
 </style>
@@ -69,51 +41,38 @@ font-weight:bold;
 
 <body>
 
-<div class="menu">
-
-<button onclick="alert('Tool Tài Xỉu VIP')">🏠 Trang chủ</button>
-
-<button onclick="alert('Lịch sử đang phát triển')">📊 Lịch sử</button>
-
-<button onclick="alert('Cài đặt tool')">⚙️ Cài đặt</button>
-
-</div>
-
-
 <div class="box">
 
-<h2>TOOL TÀI XỈU</h2>
+<h2>TOOL TÀI XỈU ONLINE</h2>
 
-<input id="md5" placeholder="Nhập MD5">
+<button onclick="loadData()">LẤY DỮ LIỆU</button>
 
-<br><br>
-
-<button onclick="predict()">PHÂN TÍCH</button>
-
-<div id="result"></div>
+<div id="result">Chưa có dữ liệu</div>
 
 </div>
-
 
 <script>
 
-function predict(){
+function loadData(){
 
-let md5=document.getElementById("md5").value;
+fetch("https://api.coindesk.com/v1/bpi/currentprice.json")
 
-let sum=0;
+.then(res => res.json())
 
-for(let i=0;i<md5.length;i++){
-sum+=md5.charCodeAt(i);
-}
+.then(data => {
 
-if(sum%2==0){
-document.getElementById("result").innerHTML="🎲 TÀI";
-document.getElementById("result").style.color="lime";
-}else{
-document.getElementById("result").innerHTML="🎲 XỈU";
-document.getElementById("result").style.color="red";
-}
+let price = parseFloat(data.bpi.USD.rate.replace(",",""));
+
+let result = price % 2 === 0 ? "TÀI" : "XỈU";
+
+document.getElementById("result").innerHTML =
+"🎲 Dự đoán: "+result;
+
+})
+
+.catch(()=>{
+document.getElementById("result").innerHTML="❌ Không kết nối được";
+});
 
 }
 
