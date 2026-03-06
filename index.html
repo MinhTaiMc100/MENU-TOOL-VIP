@@ -2,82 +2,96 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Menu Nổi</title>
+<title>Tool Tài Xỉu Auto</title>
 
 <style>
-
 body{
-height:2000px;
-background:#0f172a;
+background:#111827;
 color:white;
 font-family:Arial;
+text-align:center;
 }
 
-/* menu nổi */
-#floatingMenu{
-position:fixed;
-right:50px;
-bottom:50px;
-width:70px;
-height:70px;
-background:#00ffff;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-cursor:move;
-box-shadow:0 0 20px #00ffff;
+.box{
+margin:auto;
+margin-top:120px;
+width:420px;
+padding:30px;
+border-radius:15px;
+background:#1f2937;
+box-shadow:0 0 20px cyan;
 }
 
+input{
+width:90%;
+padding:12px;
+margin-top:15px;
+border-radius:8px;
+border:none;
+font-size:16px;
+}
+
+#result{
+margin-top:25px;
+font-size:28px;
+font-weight:bold;
+}
+
+#rate{
+margin-top:10px;
+font-size:18px;
+color:#00ffaa;
+}
 </style>
 </head>
 
 <body>
 
-<h1 style="text-align:center">TOOL CỦA THẦY TÀI EM</h1>
+<div class="box">
 
-<div id="floatingMenu">⚙️</div>
+<h2>TOOL TÀI XỈU AUTO</h2>
+
+<input id="md5" placeholder="Nhập MD5..." oninput="autoPredict()">
+
+<div id="result"></div>
+<div id="rate"></div>
+
+</div>
 
 <script>
 
-let menu = document.getElementById("floatingMenu")
+function autoPredict(){
 
-let isDown=false
-let offsetX,offsetY
+let md5 = document.getElementById("md5").value;
 
-menu.addEventListener("mousedown",function(e){
-isDown=true
-offsetX=e.clientX-menu.offsetLeft
-offsetY=e.clientY-menu.offsetTop
-})
+if(md5.length < 10){
+document.getElementById("result").innerHTML="";
+return;
+}
 
-document.addEventListener("mouseup",function(){
-isDown=false
-})
+let score = 0;
 
-document.addEventListener("mousemove",function(e){
+for(let i=0;i<md5.length;i++){
+score += md5.charCodeAt(i);
+}
 
-if(!isDown) return
+let ai = score % 100;
 
-menu.style.left=(e.clientX-offsetX)+"px"
-menu.style.top=(e.clientY-offsetY)+"px"
+if(ai > 50){
 
-})
+document.getElementById("result").innerHTML="🎲 DỰ ĐOÁN: TÀI";
+document.getElementById("result").style.color="lime";
+document.getElementById("rate").innerHTML="Độ tin cậy: "+ai+"%";
 
-function md5ToDice(md5){
+}else{
 
-let dice1 = (parseInt(md5.substring(0,2),16) % 6) + 1;
-let dice2 = (parseInt(md5.substring(2,4),16) % 6) + 1;
-let dice3 = (parseInt(md5.substring(4,6),16) % 6) + 1;
+document.getElementById("result").innerHTML="🎲 DỰ ĐOÁN: XỈU";
+document.getElementById("result").style.color="red";
+document.getElementById("rate").innerHTML="Độ tin cậy: "+(100-ai)+"%";
 
-let total = dice1 + dice2 + dice3;
+}
 
-let result = total >= 11 ? "TÀI" : "XỈU";
-
-return {dice1,dice2,dice3,total,result};
-
-})
+}
 
 </script>
 
