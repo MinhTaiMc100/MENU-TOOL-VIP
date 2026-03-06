@@ -2,93 +2,117 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Tool Tài Xỉu Auto</title>
+<title>Tool Tài Xỉu VIP</title>
 
 <style>
+
 body{
-background:#111827;
-color:white;
+margin:0;
 font-family:Arial;
+background:#0f172a;
+color:white;
 text-align:center;
 }
 
+/* MENU NỔI */
+
+.menu{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:#111827;
+padding:15px;
+box-shadow:0 0 10px cyan;
+z-index:1000;
+}
+
+.menu button{
+margin:5px;
+padding:10px 15px;
+border:none;
+border-radius:6px;
+background:cyan;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* BOX TOOL */
+
 .box{
-margin:auto;
 margin-top:120px;
-width:420px;
-padding:30px;
-border-radius:15px;
 background:#1f2937;
-box-shadow:0 0 20px cyan;
+width:420px;
+margin-left:auto;
+margin-right:auto;
+padding:30px;
+border-radius:12px;
+box-shadow:0 0 15px cyan;
 }
 
 input{
 width:90%;
 padding:12px;
-margin-top:15px;
 border-radius:8px;
 border:none;
-font-size:16px;
+margin-top:15px;
 }
 
 #result{
-margin-top:25px;
+margin-top:20px;
 font-size:28px;
 font-weight:bold;
 }
 
-#rate{
-margin-top:10px;
-font-size:18px;
-color:#00ffaa;
-}
 </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="menu">
 
-<h2>TOOL TÀI XỈU AUTO</h2>
+<button onclick="alert('Tool Tài Xỉu VIP')">🏠 Trang chủ</button>
 
-<input id="md5" placeholder="Nhập MD5..." oninput="autoPredict()">
+<button onclick="alert('Lịch sử đang phát triển')">📊 Lịch sử</button>
 
-<div id="result"></div>
-<div id="rate"></div>
+<button onclick="alert('Cài đặt tool')">⚙️ Cài đặt</button>
 
 </div>
 
+
+<div class="box">
+
+<h2>TOOL TÀI XỈU</h2>
+
+<input id="md5" placeholder="Nhập MD5">
+
+<br><br>
+
+<button onclick="predict()">PHÂN TÍCH</button>
+
+<div id="result"></div>
+
+</div>
+
+
 <script>
 
-function autoPredict(){
+function predict(){
 
-let md5 = document.getElementById("md5").value;
+let md5=document.getElementById("md5").value;
 
-if(md5.length < 10){
-document.getElementById("result").innerHTML="";
-return;
-}
-
-let score = 0;
+let sum=0;
 
 for(let i=0;i<md5.length;i++){
-score += md5.charCodeAt(i);
+sum+=md5.charCodeAt(i);
 }
 
-let ai = score % 100;
-
-if(ai > 50){
-
-document.getElementById("result").innerHTML="🎲 DỰ ĐOÁN: TÀI";
+if(sum%2==0){
+document.getElementById("result").innerHTML="🎲 TÀI";
 document.getElementById("result").style.color="lime";
-document.getElementById("rate").innerHTML="Độ tin cậy: "+ai+"%";
-
 }else{
-
-document.getElementById("result").innerHTML="🎲 DỰ ĐOÁN: XỈU";
+document.getElementById("result").innerHTML="🎲 XỈU";
 document.getElementById("result").style.color="red";
-document.getElementById("rate").innerHTML="Độ tin cậy: "+(100-ai)+"%";
-
 }
 
 }
