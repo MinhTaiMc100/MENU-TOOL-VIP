@@ -5,17 +5,140 @@
 <title>TAI XIU AI VIP</title>
 
 <style>
-
 body{
-background:#020617;
+background:#0f172a;
 font-family:Arial;
 color:white;
 text-align:center;
 }
 
+button{
+padding:10px 20px;
+margin:10px;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.tai{background:#22c55e;color:white;}
+.xiu{background:#ef4444;color:white;}
+
+#stats{
+font-size:22px;
+margin-top:20px;
+color:#ffd700;
+}
+
+/* menu nổi */
+#menu{
+position:fixed;
+right:20px;
+bottom:20px;
+width:70px;
+height:70px;
+background:#00ffff;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+box-shadow:0 0 20px #00ffff;
+cursor:move;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🎲 TOOL TÀI XỈU</h1>
+
+<button class="tai" onclick="add('T')">TÀI</button>
+<button class="xiu" onclick="add('X')">XỈU</button>
+
+<div id="stats">
+📈 Tài 0% | Xỉu 0%
+</div>
+
+<div id="menu">
+⚙️
+</div>
+
+<script>
+
+let history=[]
+
+function add(r){
+
+history.push(r)
+
+let tai = history.filter(x=>x=="T").length
+let xiu = history.filter(x=>x=="X").length
+
+let total = history.length
+
+let taiPercent = Math.round((tai/total)*100)
+let xiuPercent = Math.round((xiu/total)*100)
+
+document.getElementById("stats").innerText =
+"📈 Tài "+taiPercent+"% | Xỉu "+xiuPercent+"%"
+
+}
+
+/* menu kéo được */
+
+let menu=document.getElementById("menu")
+
+let offsetX,offsetY,isDown=false
+
+menu.addEventListener("mousedown",e=>{
+isDown=true
+offsetX=e.clientX-menu.offsetLeft
+offsetY=e.clientY-menu.offsetTop
+})
+
+document.addEventListener("mouseup",()=>isDown=false)
+
+document.addEventListener("mousemove",e=>{
+
+if(!isDown) return
+
+menu.style.left=(e.clientX-offsetX)+"px"
+menu.style.top=(e.clientY-offsetY)+"px"
+
+})
+  
+<style>
+
+body{
+background:#0b0f1a;
+color:white;
+font-family:Arial;
+text-align:center;
+}
+
 h1{
-color:#00f5ff;
-text-shadow:0 0 10px #00f5ff;
+color:#ffd700;
+text-shadow:0 0 15px #ffd700;
+}
+
+button{
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.tai{
+background:#22c55e;
+box-shadow:0 0 10px #22c55e;
+}
+
+.xiu{
+background:#ef4444;
+box-shadow:0 0 10px #ef4444;
 }
 
 .board{
@@ -30,14 +153,6 @@ margin-top:20px;
 width:30px;
 height:30px;
 border-radius:6px;
-}
-
-.tai{
-background:#16a34a;
-}
-
-.xiu{
-background:#dc2626;
 }
 
 button{
@@ -141,157 +256,6 @@ document.getElementById("predict").innerText="AI GỢI Ý: "+result
 
 }
 
-let history = [];
-
-function addResult(result){
-  history.push(result);
-
-  // chỉ giữ 300 ván gần nhất
-  if(history.length > 300){
-    history.shift();
-  }
-}
-
-function getStats(){
-
-  let tai = history.filter(v => v === "T").length;
-  let xiu = history.filter(v => v === "X").length;
-
-  let total = history.length;
-
-  let taiPercent = total ? Math.round((tai/total)*100) : 0;
-  let xiuPercent = total ? Math.round((xiu/total)*100) : 0;
-
-  return {
-    tai,
-    xiu,
-    taiPercent,
-    xiuPercent
-  };
-
-}
-
-function getStats(){
-
-  let tai = history.filter(v => v === "T").length;
-  let xiu = history.filter(v => v === "X").length;
-
-  let total = history.length;
-
-  let taiPercent = total ? Math.round((tai/total)*100) : 0;
-  let xiuPercent = total ? Math.round((xiu/total)*100) : 0;
-
-  return {
-    tai,
-    xiu,
-    taiPercent,
-    xiuPercent
-  };
-
-}
-
-function detectPattern(){
-
-  let last4 = history.slice(-4).join("");
-
-  if(last4 === "TTTT"){
-    return "Có thể gãy cầu → gợi ý XỈU";
-  }
-
-  if(last4 === "XXXX"){
-    return "Có thể gãy cầu → gợi ý TÀI";
-  }
-
-  return "Chưa thấy cầu rõ";
-}
-
-function predict(){
-
-  let stats = getStats();
-
-  if(stats.taiPercent > stats.xiuPercent){
-    return "AI gợi ý: XỈU";
-  }else{
-    return "AI gợi ý: TÀI";
-  }
-
-}
-
-let history = [];
-
-function addResult(result){
-  history.push(result);
-
-  // chỉ giữ 300 ván gần nhất
-  if(history.length > 300){
-    history.shift();
-  }
-}
-
-function getStats(){
-
-  let tai = history.filter(v => v === "T").length;
-  let xiu = history.filter(v => v === "X").length;
-
-  let total = history.length;
-
-  let taiPercent = total ? Math.round((tai/total)*100) : 0;
-  let xiuPercent = total ? Math.round((xiu/total)*100) : 0;
-
-  return {
-    tai,
-    xiu,
-    taiPercent,
-    xiuPercent
-  };
-
-}
-
-function getStats(){
-
-  let tai = history.filter(v => v === "T").length;
-  let xiu = history.filter(v => v === "X").length;
-
-  let total = history.length;
-
-  let taiPercent = total ? Math.round((tai/total)*100) : 0;
-  let xiuPercent = total ? Math.round((xiu/total)*100) : 0;
-
-  return {
-    tai,
-    xiu,
-    taiPercent,
-    xiuPercent
-  };
-
-}
-
-function detectPattern(){
-
-  let last4 = history.slice(-4).join("");
-
-  if(last4 === "TTTT"){
-    return "Có thể gãy cầu → gợi ý XỈU";
-  }
-
-  if(last4 === "XXXX"){
-    return "Có thể gãy cầu → gợi ý TÀI";
-  }
-
-  return "Chưa thấy cầu rõ";
-}
-
-function predict(){
-
-  let stats = getStats();
-
-  if(stats.taiPercent > stats.xiuPercent){
-    return "AI gợi ý: XỈU";
-  }else{
-    return "AI gợi ý: TÀI";
-  }
-
-}
   
 </script>
 
