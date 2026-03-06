@@ -217,6 +217,82 @@ function predict(){
 
 }
 
+let history = [];
+
+function addResult(result){
+  history.push(result);
+
+  // chỉ giữ 300 ván gần nhất
+  if(history.length > 300){
+    history.shift();
+  }
+}
+
+function getStats(){
+
+  let tai = history.filter(v => v === "T").length;
+  let xiu = history.filter(v => v === "X").length;
+
+  let total = history.length;
+
+  let taiPercent = total ? Math.round((tai/total)*100) : 0;
+  let xiuPercent = total ? Math.round((xiu/total)*100) : 0;
+
+  return {
+    tai,
+    xiu,
+    taiPercent,
+    xiuPercent
+  };
+
+}
+
+function getStats(){
+
+  let tai = history.filter(v => v === "T").length;
+  let xiu = history.filter(v => v === "X").length;
+
+  let total = history.length;
+
+  let taiPercent = total ? Math.round((tai/total)*100) : 0;
+  let xiuPercent = total ? Math.round((xiu/total)*100) : 0;
+
+  return {
+    tai,
+    xiu,
+    taiPercent,
+    xiuPercent
+  };
+
+}
+
+function detectPattern(){
+
+  let last4 = history.slice(-4).join("");
+
+  if(last4 === "TTTT"){
+    return "Có thể gãy cầu → gợi ý XỈU";
+  }
+
+  if(last4 === "XXXX"){
+    return "Có thể gãy cầu → gợi ý TÀI";
+  }
+
+  return "Chưa thấy cầu rõ";
+}
+
+function predict(){
+
+  let stats = getStats();
+
+  if(stats.taiPercent > stats.xiuPercent){
+    return "AI gợi ý: XỈU";
+  }else{
+    return "AI gợi ý: TÀI";
+  }
+
+}
+  
 </script>
 
 </body>
