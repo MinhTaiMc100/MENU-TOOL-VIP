@@ -1,41 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>BCR Pattern Tool</title>
+<title>Tool Công Thức</title>
 
 <style>
 body{
-background:#0f172a;
-color:white;
+background:#061a23;
 font-family:Arial;
+color:white;
 text-align:center;
+}
+
+.container{
+width:320px;
+margin:auto;
+margin-top:40px;
+background:#081f2a;
+border-radius:15px;
 padding:20px;
+box-shadow:0 0 20px #00eaff55;
 }
 
-button{
-padding:10px 16px;
-margin:5px;
-font-size:16px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.b{background:red;color:white;}
-.p{background:blue;color:white;}
-.t{background:green;color:white;}
-.r{background:orange;color:black;}
-
-#history{
-margin-top:20px;
+.title{
+margin-bottom:15px;
 font-size:18px;
 }
 
-#pattern{
+.dice-grid{
+display:grid;
+grid-template-columns:repeat(3,70px);
+gap:10px;
+justify-content:center;
+margin-top:10px;
+}
+
+.dice{
+width:70px;
+height:70px;
+border-radius:50%;
+border:2px solid #00eaff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+cursor:pointer;
+}
+
+.dice:hover{
+background:#00eaff22;
+}
+
+.result{
 margin-top:20px;
-font-size:24px;
-color:#facc15;
+font-size:28px;
+color:#ff4040;
+}
+
+button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:#00eaff;
+cursor:pointer;
+font-size:16px;
 }
 
 </style>
@@ -43,64 +72,57 @@ color:#facc15;
 
 <body>
 
-<h2>BCR PATTERN VIP TOOL</h2>
+<div class="container">
 
-<button class="b" onclick="add('B')">Banker</button>
-<button class="p" onclick="add('P')">Player</button>
-<button class="t" onclick="add('T')">Tie</button>
-<button class="r" onclick="resetGame()">Reset</button>
+<div class="title">TOOL CÔNG THỨC</div>
 
-<div id="history"></div>
+<div class="dice-grid">
 
-<div id="pattern">Chưa có dữ liệu</div>
+<div class="dice" onclick="add(1)">1</div>
+<div class="dice" onclick="add(2)">2</div>
+<div class="dice" onclick="add(3)">3</div>
+<div class="dice" onclick="add(4)">4</div>
+<div class="dice" onclick="add(5)">5</div>
+<div class="dice" onclick="add(6)">6</div>
+
+</div>
+
+<button onclick="analyze()">PHÂN TÍCH</button>
+
+<div class="result" id="result">---</div>
+
+</div>
 
 <script>
 
-let history=[];
+let dice=[];
 
-function add(v){
+function add(n){
 
-history.push(v);
+if(dice.length>=3) return;
 
-document.getElementById("history").innerText =
-"Lịch sử: "+history.join(" ");
-
-analyze();
+dice.push(n);
 
 }
 
 function analyze(){
 
-if(history.length<4){
+if(dice.length<3){
 
-document.getElementById("pattern").innerText="Chưa đủ dữ liệu";
+document.getElementById("result").innerText="Chọn 3 xúc xắc";
 
 return;
 
 }
 
-let last4 = history.slice(-4).join("");
+let total = dice[0]+dice[1]+dice[2];
 
-if(last4==="BBBB")
-document.getElementById("pattern").innerText="Cầu bệt Banker";
-
-else if(last4==="PPPP")
-document.getElementById("pattern").innerText="Cầu bệt Player";
-
-else if(last4==="BPBP" || last4==="PBPB")
-document.getElementById("pattern").innerText="Cầu 1-1";
-
+if(total>=11)
+document.getElementById("result").innerText="TÀI";
 else
-document.getElementById("pattern").innerText="Cầu gãy";
+document.getElementById("result").innerText="XỈU";
 
-}
-
-function resetGame(){
-
-history=[];
-
-document.getElementById("history").innerText="";
-document.getElementById("pattern").innerText="Đã reset";
+dice=[];
 
 }
 
