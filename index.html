@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>BCR Bead Plate</title>
+
 <style>
-.grid{
+body{
+background:#0f172a;
+color:white;
+font-family:Arial;
+text-align:center;
+}
+
+.board{
 display:grid;
-grid-template-columns:repeat(6,40px);
-gap:5px;
+grid-template-columns:repeat(10,40px);
+gap:6px;
+justify-content:center;
+margin-top:20px;
 }
 
 .cell{
@@ -15,32 +27,46 @@ border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-color:white;
 font-weight:bold;
+color:white;
 }
 
 .B{background:red;}
 .P{background:blue;}
 .T{background:green;}
+
+button{
+margin:5px;
+padding:10px 15px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="grid" id="board"></div>
+<h2>Bead Plate Baccarat</h2>
+
+<button onclick="add('B')">Banker</button>
+<button onclick="add('P')">Player</button>
+<button onclick="add('T')">Tie</button>
+
+<div class="board" id="board"></div>
 
 <script>
 
-let history=["B","P","B","B","P","P","B","T"];
+let history=[];
 
-let board=document.getElementById("board");
+function add(v){
 
-history.forEach(v=>{
+history.push(v);
+
 let div=document.createElement("div");
 div.className="cell "+v;
 div.innerText=v;
-board.appendChild(div);
-});
+
+document.getElementById("board").appendChild(div);
+
+}
 
 </script>
 
