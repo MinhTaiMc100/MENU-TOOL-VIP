@@ -111,6 +111,15 @@ box-shadow:0 0 30px #00ffc3;
 
 <script>
 
+fetch("https://api-casino.com/result")
+.then(res => res.json())
+.then(data => {
+console.log(data.result);
+});
+
+let result=document.querySelector(".result").innerText;
+history.push(result);
+
 let history=[];
 
 function add(v){
@@ -121,54 +130,6 @@ document.getElementById("history").innerHTML=history.join(" ");
 
 }
 
-function predict(){
-
-let b=history.filter(x=>x=="B").length;
-let p=history.filter(x=>x=="P").length;
-
-let result="";
-
-if(b>p){
-result="👉 PLAYER";
-}
-else if(p>b){
-result="👉 BANKER";
-}
-else{
-result=Math.random()>0.5?"👉 BANKER":"👉 PLAYER";
-}
-
-document.getElementById("result").innerHTML=result;
-
-document.getElementById("sound").play();
-
-}
-
-function stats(){
-
-let b=history.filter(x=>x=="B").length;
-let p=history.filter(x=>x=="P").length;
-
-alert("BANKER: "+b+" | PLAYER: "+p);
-
-}
-
-function reset(){
-
-history=[];
-document.getElementById("history").innerHTML="";
-document.getElementById("result").innerHTML="";
-
-}
-
-let btn=document.getElementById("menuBtn");
-let menu=document.getElementById("menu");
-
-btn.onclick=function(){
-
-menu.style.display=menu.style.display=="block"?"none":"block";
-
-}
 
 </script>
 
