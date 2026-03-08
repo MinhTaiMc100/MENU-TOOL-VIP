@@ -1,89 +1,173 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Casino Tool Menu</title>
+<title>VIP Casino Tool</title>
 
 <style>
+
 body{
 margin:0;
+background:#0b0b0b;
+color:white;
 font-family:Arial;
+text-align:center;
 }
 
-/* iframe casino */
-#casino{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+h1{
+color:#00ffc3;
+}
+
+/* lịch sử */
+#history{
+margin:20px;
+font-size:20px;
+word-wrap:break-word;
+}
+
+/* nút */
+button{
+padding:12px 20px;
+margin:5px;
 border:none;
+border-radius:8px;
+font-size:16px;
+}
+
+.banker{background:#ff0033;color:white;}
+.player{background:#0099ff;color:white;}
+.predict{background:#00cc66;color:white;}
+
+/* kết quả */
+#result{
+font-size:30px;
+margin-top:20px;
+color:#ffd700;
 }
 
 /* menu nổi */
 #menuBtn{
 position:fixed;
-top:200px;
 right:20px;
+bottom:40px;
 width:60px;
 height:60px;
 background:#ff0033;
 border-radius:50%;
-color:white;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:24px;
+font-size:26px;
 z-index:9999;
 }
 
-/* bảng tool */
 #menu{
 position:fixed;
-top:270px;
 right:20px;
+bottom:110px;
 background:#111;
-color:white;
 padding:15px;
 border-radius:10px;
 display:none;
-z-index:9999;
+box-shadow:0 0 10px #00ffc3;
 }
 
-button{
-margin:5px 0;
-width:120px;
-padding:8px;
-}
 </style>
 </head>
 
 <body>
 
-<iframe id="casino" src="https://example.com"></iframe>
+<h1>🎰 VIP BCR TOOL 2026</h1>
 
+<div>
+
+<button class="banker" onclick="add('B')">BANKER</button>
+<button class="player" onclick="add('P')">PLAYER</button>
+
+</div>
+
+<div id="history"></div>
+
+<button class="predict" onclick="predict()">DỰ ĐOÁN</button>
+
+<div id="result"></div>
+
+<audio id="sound">
+<source src="https://www.soundjay.com/buttons/sounds/button-3.mp3">
+</audio>
+
+<!-- menu nổi -->
 <div id="menuBtn">⚙️</div>
 
 <div id="menu">
-<button onclick="predict()">Dự đoán</button>
-<button onclick="reset()">Reset</button>
+
+<button onclick="predict()">🔮 Dự đoán</button>
+
+<button onclick="stats()">📊 Thống kê</button>
+
+<button onclick="reset()">♻️ Reset</button>
+
 </div>
 
 <script>
+
+let history=[];
+
+function add(v){
+
+history.push(v);
+
+document.getElementById("history").innerHTML=history.join(" ");
+
+}
+
+function predict(){
+
+let b=history.filter(x=>x=="B").length;
+let p=history.filter(x=>x=="P").length;
+
+let result="";
+
+if(b>p){
+result="👉 PLAYER";
+}
+else if(p>b){
+result="👉 BANKER";
+}
+else{
+result=Math.random()>0.5?"👉 BANKER":"👉 PLAYER";
+}
+
+document.getElementById("result").innerHTML=result;
+
+document.getElementById("sound").play();
+
+}
+
+function stats(){
+
+let b=history.filter(x=>x=="B").length;
+let p=history.filter(x=>x=="P").length;
+
+alert("BANKER: "+b+" | PLAYER: "+p);
+
+}
+
+function reset(){
+
+history=[];
+document.getElementById("history").innerHTML="";
+document.getElementById("result").innerHTML="";
+
+}
 
 let btn=document.getElementById("menuBtn");
 let menu=document.getElementById("menu");
 
 btn.onclick=function(){
-menu.style.display = menu.style.display=="block"?"none":"block";
-}
 
-function predict(){
-alert("Tool dự đoán...");
-}
+menu.style.display=menu.style.display=="block"?"none":"block";
 
-function reset(){
-alert("Đã reset!");
 }
 
 </script>
