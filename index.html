@@ -2,44 +2,57 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AI BCR Tool</title>
+<title>BCR Pattern Tool</title>
 
 <style>
 body{
-font-family:Arial;
-text-align:center;
 background:#0f172a;
 color:white;
+font-family:Arial;
+text-align:center;
+padding:20px;
 }
 
 button{
-padding:10px 15px;
+padding:10px 16px;
 margin:5px;
+font-size:16px;
+border:none;
+border-radius:6px;
+cursor:pointer;
 }
+
+.b{background:red;color:white;}
+.p{background:blue;color:white;}
+.t{background:green;color:white;}
+.r{background:orange;color:black;}
 
 #history{
 margin-top:20px;
 font-size:18px;
 }
 
-#predict{
+#pattern{
 margin-top:20px;
 font-size:24px;
+color:#facc15;
 }
-</style>
 
+</style>
 </head>
 
 <body>
 
-<h2>Tool BCR AI</h2>
+<h2>BCR PATTERN VIP TOOL</h2>
 
-<button onclick="add('B')">Banker</button>
-<button onclick="add('P')">Player</button>
-<button onclick="add('T')">Tie</button>
+<button class="b" onclick="add('B')">Banker</button>
+<button class="p" onclick="add('P')">Player</button>
+<button class="t" onclick="add('T')">Tie</button>
+<button class="r" onclick="resetGame()">Reset</button>
 
 <div id="history"></div>
-<div id="predict">Chưa có dữ liệu</div>
+
+<div id="pattern">Chưa có dữ liệu</div>
 
 <script>
 
@@ -50,7 +63,7 @@ function add(v){
 history.push(v);
 
 document.getElementById("history").innerText =
-"Lịch sử: " + history.join(" ");
+"Lịch sử: "+history.join(" ");
 
 analyze();
 
@@ -58,29 +71,36 @@ analyze();
 
 function analyze(){
 
-if(history.length < 4){
-document.getElementById("predict").innerText =
-"Chưa đủ dữ liệu";
+if(history.length<4){
+
+document.getElementById("pattern").innerText="Chưa đủ dữ liệu";
+
 return;
+
 }
 
-let last4 = history.slice(-4);
+let last4 = history.slice(-4).join("");
 
-let banker = last4.filter(x => x=="B").length;
-let player = last4.filter(x => x=="P").length;
+if(last4==="BBBB")
+document.getElementById("pattern").innerText="Cầu bệt Banker";
 
-if(banker > player){
-document.getElementById("predict").innerText =
-"Gợi ý: PLAYER";
+else if(last4==="PPPP")
+document.getElementById("pattern").innerText="Cầu bệt Player";
+
+else if(last4==="BPBP" || last4==="PBPB")
+document.getElementById("pattern").innerText="Cầu 1-1";
+
+else
+document.getElementById("pattern").innerText="Cầu gãy";
+
 }
-else if(player > banker){
-document.getElementById("predict").innerText =
-"Gợi ý: BANKER";
-}
-else{
-document.getElementById("predict").innerText =
-"Cầu cân – theo chuỗi";
-}
+
+function resetGame(){
+
+history=[];
+
+document.getElementById("history").innerText="";
+document.getElementById("pattern").innerText="Đã reset";
 
 }
 
