@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>BCR Bead Plate</title>
-
 <style>
+<script>
 body{
 background:#0f172a;
 color:white;
 font-family:Arial;
 text-align:center;
-}
-
-.board{
-display:grid;
-grid-template-columns:repeat(10,40px);
-gap:6px;
-justify-content:center;
-margin-top:20px;
 }
 
 .cell{
@@ -27,48 +14,28 @@ border-radius:50%;
 display:flex;
 align-items:center;
 justify-content:center;
-font-weight:bold;
 color:white;
+font-weight:bold;
 }
 
 .B{background:red;}
 .P{background:blue;}
 .T{background:green;}
+  
+function analyze(history){
 
-button{
-margin:5px;
-padding:10px 15px;
-}
-</style>
-</head>
+let last5 = history.slice(-5);
 
-<body>
+let banker = last5.filter(x=>x=="B").length;
+let player = last5.filter(x=>x=="P").length;
 
-<h2>Bead Plate Baccarat</h2>
-
-<button onclick="add('B')">Banker</button>
-<button onclick="add('P')">Player</button>
-<button onclick="add('T')">Tie</button>
-
-<div class="board" id="board"></div>
-
-<script>
-
-let history=[];
-
-function add(v){
-
-history.push(v);
-
-let div=document.createElement("div");
-div.className="cell "+v;
-div.innerText=v;
-
-document.getElementById("board").appendChild(div);
-
+if(banker > player){
+return "Xu hướng: BANKER";
+}else{
+return "Xu hướng: PLAYER";
 }
 
+}
+  
 </script>
-
-</body>
-</html>
+</style>
