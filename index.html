@@ -1,5 +1,4 @@
 <style>
-<script>
 
 body{
 background:#0f172a;
@@ -23,20 +22,4 @@ font-weight:bold;
 .P{background:blue;}
 .T{background:green;}
   
-function analyze(history){
-
-let last5 = history.slice(-5);
-
-let banker = last5.filter(x=>x=="B").length;
-let player = last5.filter(x=>x=="P").length;
-
-if(banker > player){
-return "Xu hướng: BANKER";
-}else{
-return "Xu hướng: PLAYER";
-}
-
-}
-  
-</script>
 </style>
