@@ -126,6 +126,35 @@ dice=[];
 
 }
 
+<script>
+
+let history = [];
+
+function add(result){
+history.push(result);
+}
+
+function aiPredict(){
+
+if(history.length < 6){
+return "Chưa đủ dữ liệu";
+}
+
+let last6 = history.slice(-6);
+
+let tai = last6.filter(x => x=="T").length;
+let xiu = last6.filter(x => x=="X").length;
+
+if(tai > xiu){
+return "AI dự đoán: XỈU";
+}
+else{
+return "AI dự đoán: TÀI";
+}
+
+}
+
+
 </script>
 
 </body>
