@@ -1,116 +1,46 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Tool BCR Baccarat</title>
-
 <style>
-body{
-font-family:Arial;
-background:#0f172a;
+.grid{
+display:grid;
+grid-template-columns:repeat(6,40px);
+gap:5px;
+}
+
+.cell{
+width:40px;
+height:40px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
 color:white;
-text-align:center;
-padding:30px;
+font-weight:bold;
 }
 
-.box{
-background:#1e293b;
-padding:20px;
-border-radius:12px;
-max-width:420px;
-margin:auto;
-}
-
-button{
-padding:10px 18px;
-margin:6px;
-font-size:16px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-.banker{background:red;color:white;}
-.player{background:blue;color:white;}
-.tie{background:green;color:white;}
-.reset{background:orange;color:black;}
-
-.history{
-margin-top:15px;
-font-size:18px;
-word-wrap:break-word;
-}
-
-.result{
-font-size:24px;
-margin-top:20px;
-}
+.B{background:red;}
+.P{background:blue;}
+.T{background:green;}
 </style>
 </head>
 
 <body>
 
-<div class="box">
-
-<h2>TOOL BCR BACCARAT</h2>
-
-<button class="banker" onclick="add('B')">Banker</button>
-<button class="player" onclick="add('P')">Player</button>
-<button class="tie" onclick="add('T')">Tie</button>
-<button class="reset" onclick="resetData()">Reset</button>
-
-<div class="history" id="history">Lịch sử:</div>
-
-<div class="result" id="predict">
-Chưa có dữ liệu
-</div>
-
-</div>
+<div class="grid" id="board"></div>
 
 <script>
 
-let history=[];
+let history=["B","P","B","B","P","P","B","T"];
 
-function add(v){
+let board=document.getElementById("board");
 
-history.push(v);
-
-document.getElementById("history").innerText=
-"Lịch sử: "+history.join(" ");
-
-predict();
-
-}
-
-function resetData(){
-
-history=[];
-document.getElementById("history").innerText="Lịch sử:";
-document.getElementById("predict").innerText="Đã reset";
-
-}
-
-function predict(){
-
-if(history.length<4){
-document.getElementById("predict").innerText="Chưa đủ dữ liệu";
-return;
-}
-
-let last4=history.slice(-4);
-
-let banker=last4.filter(x=>x=="B").length;
-let player=last4.filter(x=>x=="P").length;
-
-if(banker>player){
-document.getElementById("predict").innerText="Gợi ý: PLAYER";
-}else if(player>banker){
-document.getElementById("predict").innerText="Gợi ý: BANKER";
-}else{
-document.getElementById("predict").innerText="Cầu hòa – theo chuỗi";
-}
-
-}
+history.forEach(v=>{
+let div=document.createElement("div");
+div.className="cell "+v;
+div.innerText=v;
+board.appendChild(div);
+});
 
 </script>
 
