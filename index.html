@@ -72,6 +72,39 @@ font-size:16px;
 
 <body>
 
+<h2>Kết quả game</h2>
+
+<button onclick="getGame()">Lấy kết quả</button>
+
+<div id="result"></div>
+
+<script>
+
+async function getGame(){
+
+try{
+
+let res = await fetch("https://example.com/api/game-result");
+
+let data = await res.json();
+
+document.getElementById("result").innerText =
+"Kết quả: " + data.result;
+
+}
+catch(e){
+
+document.getElementById("result").innerText =
+"Không kết nối được";
+
+}
+
+}
+
+</script>
+  
+<body>
+
 <div class="container">
 
 <div class="title">TOOL CÔNG THỨC</div>
