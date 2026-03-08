@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>BCR VIP 2026</title>
+<style>
+body{
+background:#0b0b0b;
+color:white;
+font-family:Arial;
+text-align:center;
+}
+.box{
+background:#111;
+border-radius:15px;
+padding:20px;
+margin:20px;
+box-shadow:0 0 15px #00ffcc;
+}
+button{
+padding:15px 30px;
+border:none;
+border-radius:10px;
+font-size:18px;
+margin:10px;
+}
+.player{background:#2196f3;color:white;}
+.banker{background:#e91e63;color:white;}
+.predict{background:#00c853;color:white;}
+#result{
+font-size:30px;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎰 BCR VIP TOOL 2026</h1>
+
+<div class="box">
+
+<h2>Nhập kết quả bàn trước</h2>
+
+<button class="player" onclick="add('P')">PLAYER</button>
+<button class="banker" onclick="add('B')">BANKER</button>
+
+<p id="history"></p>
+
+<button class="predict" onclick="predict()">DỰ ĐOÁN</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+let history=[];
+
+function add(v){
+history.push(v);
+document.getElementById("history").innerHTML=history.join(" ");
+}
+
+function predict(){
+
+let b=history.filter(x=>x=="B").length;
+let p=history.filter(x=>x=="P").length;
+
+let result="";
+
+if(b>p){
+result="👉 PLAYER";
+}else if(p>b){
+result="👉 BANKER";
+}else{
+result=Math.random()>0.5?"👉 PLAYER":"👉 BANKER";
+}
+
+document.getElementById("result").innerHTML="Dự đoán: "+result;
+
+}
+
+</script>
+
+</body>
+</html>
