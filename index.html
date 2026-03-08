@@ -1,85 +1,90 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>BCR VIP 2026</title>
+<title>Casino Tool Menu</title>
+
 <style>
 body{
-background:#0b0b0b;
-color:white;
+margin:0;
 font-family:Arial;
-text-align:center;
 }
-.box{
-background:#111;
-border-radius:15px;
-padding:20px;
-margin:20px;
-box-shadow:0 0 15px #00ffcc;
-}
-button{
-padding:15px 30px;
+
+/* iframe casino */
+#casino{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
 border:none;
-border-radius:10px;
-font-size:18px;
-margin:10px;
 }
-.player{background:#2196f3;color:white;}
-.banker{background:#e91e63;color:white;}
-.predict{background:#00c853;color:white;}
-#result{
-font-size:30px;
-margin-top:20px;
+
+/* menu nổi */
+#menuBtn{
+position:fixed;
+top:200px;
+right:20px;
+width:60px;
+height:60px;
+background:#ff0033;
+border-radius:50%;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+z-index:9999;
+}
+
+/* bảng tool */
+#menu{
+position:fixed;
+top:270px;
+right:20px;
+background:#111;
+color:white;
+padding:15px;
+border-radius:10px;
+display:none;
+z-index:9999;
+}
+
+button{
+margin:5px 0;
+width:120px;
+padding:8px;
 }
 </style>
 </head>
 
 <body>
 
-<button onclick="openGame()">MỞ GAME CASINO</button>
+<iframe id="casino" src="https://example.com"></iframe>
 
-<script>
-function openGame(){
-window.open("https://fly88h.com/home/mine");
-}
-</script>
+<div id="menuBtn">⚙️</div>
 
-<h1>🎰 BCR VIP TOOL 2026</h1>
-
-<div class="box">
-
-<h2>Nhập kết quả bàn trước</h2>
-
-<button class="player" onclick="add('P')">PLAYER</button>
-<button class="banker" onclick="add('B')">BANKER</button>
-
-<p id="history"></p>
-
-<button class="predict" onclick="predict()">DỰ ĐOÁN</button>
-
-<div id="result"></div>
-
+<div id="menu">
+<button onclick="predict()">Dự đoán</button>
+<button onclick="reset()">Reset</button>
 </div>
 
-<audio id="sound">
-<source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
-</audio>
 <script>
 
-let history=[];
+let btn=document.getElementById("menuBtn");
+let menu=document.getElementById("menu");
+
+btn.onclick=function(){
+menu.style.display = menu.style.display=="block"?"none":"block";
+}
 
 function predict(){
-let last = history.slice(-3);
-
-if(last[0]=="B" && last[1]=="B"){
-return "PLAYER";
+alert("Tool dự đoán...");
 }
 
-if(last[0]=="P" && last[1]=="P"){
-return "BANKER";
+function reset(){
+alert("Đã reset!");
 }
-}
-
 
 </script>
 
