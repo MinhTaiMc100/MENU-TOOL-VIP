@@ -80,29 +80,6 @@ return "BANKER";
 }
 }
 
-function add(v){
-history.push(v);
-document.getElementById("history").innerHTML=history.join(" ");
-}
-
-function predict(){
-
-let b=history.filter(x=>x=="B").length;
-let p=history.filter(x=>x=="P").length;
-
-let result="";
-
-if(b>p){
-result="👉 PLAYER";
-}else if(p>b){
-result="👉 BANKER";
-}else{
-result=Math.random()>0.5?"👉 PLAYER":"👉 BANKER";
-}
-
-document.getElementById("result").innerHTML="Dự đoán: "+result;
-
-}
 
 </script>
 
